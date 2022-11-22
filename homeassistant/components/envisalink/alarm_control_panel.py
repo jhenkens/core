@@ -27,17 +27,6 @@ from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
-from . import (
-    CONF_PANIC,
-    CONF_PARTITIONNAME,
-    DATA_EVL,
-    DOMAIN,
-    PARTITION_SCHEMA,
-    SIGNAL_KEYPAD_UPDATE,
-    SIGNAL_PARTITION_UPDATE,
-    EnvisalinkDevice,
-)
-
 _LOGGER = logging.getLogger(__name__)
 
 SERVICE_ALARM_KEYPRESS = "alarm_keypress"

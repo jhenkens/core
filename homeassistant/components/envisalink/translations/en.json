@@ -1,0 +1,40 @@
+{
+    "config": {
+        "error": {
+            "invalid_auth": "Invalid authentication"
+        },
+        "step": {
+            "user": {
+                "data": {
+                    "evl_version": "Envisalink Version (EVL3 or EVL4)",
+                    "host": "Host",
+                    "panel_type": "Alarm system panel type",
+                    "password": "Password",
+                    "port": "Port",
+                    "username": "Username"
+                },
+                "description": "Please enter the credentials used to log into the envisalink module"
+            }
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "data": {
+                    "code": "Alarm Panel Code",
+                    "keepalive_interval": "Heartbeat Interval",
+                    "panic_type": "Alarm Panic Type",
+                    "timeout": "Timeout to Envisalink",
+                    "zonedump_interval": "Zone Status Dump Interval"
+                },
+                "data_description": {
+                    "code": "Your alarm panel's code, for authenticating user input during arm/disarm. If you do not provide this value, the integration will prompt the user to enter the code at runtime",
+                    "keepalive_interval": "This is a periodic heartbeat signal (measured in seconds) sent to your Envisalink board to keep it from restarting. This is required for DSC and Honeywell systems",
+                    "panic_type": "This is used when the alarm_trigger service is called in Home Assistant. This determines which type of panic alarm to raise",
+                    "zonedump_interval": "This is an interval (measured in seconds) where Envisalink will dump out all zone statuses. This is required for Honeywell systems, which do not properly send zone closure events. DSC boards do not technically need this"
+                },
+                "description": "Additional Envisalink config options."
+            }
+        }
+    }
+}

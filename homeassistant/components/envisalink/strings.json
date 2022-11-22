@@ -1,0 +1,40 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "Please enter the credentials used to log into the envisalink module",
+                "data": {
+                    "username": "[%key:common::config_flow::data::username%]",
+                    "password": "[%key:common::config_flow::data::password%]",
+                    "host": "[%key:common::config_flow::data::host%]",
+                    "port": "[%key:common::config_flow::data::port%]",
+                    "evl_version": "Envisalink Version (EVL3 or EVL4)",
+                    "panel_type": "Alarm system panel type"
+                }
+            }
+        },
+        "error": {
+            "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]"
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "description": "Additional Envisalink config options.",
+                "data": {
+                    "panic_type": "Alarm Panic Type",
+                    "zonedump_interval": "Zone Status Dump Interval",
+                    "keepalive_interval": "Heartbeat Interval",
+                    "timeout": "Timeout to Envisalink",
+                    "code": "Alarm Panel Code"
+                },
+                "data_description": {
+                    "panic_type": "This is used when the alarm_trigger service is called in Home Assistant. This determines which type of panic alarm to raise",
+                    "zonedump_interval": "This is an interval (measured in seconds) where Envisalink will dump out all zone statuses. This is required for Honeywell systems, which do not properly send zone closure events. DSC boards do not technically need this",
+                    "keepalive_interval": "This is a periodic heartbeat signal (measured in seconds) sent to your Envisalink board to keep it from restarting. This is required for DSC and Honeywell systems",
+                    "code": "Your alarm panel's code, for authenticating user input during arm/disarm. If you do not provide this value, the integration will prompt the user to enter the code at runtime"
+                }
+            }
+        }
+    }
+}

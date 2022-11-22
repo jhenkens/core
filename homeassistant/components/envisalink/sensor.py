@@ -2,49 +2,31 @@
 from __future__ import annotations
 
 import logging
+from typing import Any
+from collections.abc import Mapping
+from .envisalink_device import EnvisalinkDevice
 
 from homeassistant.components.sensor import SensorEntity
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
-from . import (
-    CONF_PARTITIONNAME,
-    DATA_EVL,
-    PARTITION_SCHEMA,
+from .const import (
     SIGNAL_KEYPAD_UPDATE,
     SIGNAL_PARTITION_UPDATE,
-    EnvisalinkDevice,
 )
 
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_platform(
+async def async_setup_entry(
     hass: HomeAssistant,
-    config: ConfigType,
+    config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
-    discovery_info: DiscoveryInfoType | None = None,
 ) -> None:
     """Perform the setup for Envisalink sensor entities."""
-    if not discovery_info:
-        return
-    configured_partitions = discovery_info["partitions"]
-
     entities = []
-    for part_num in configured_partitions:
-        entity_config_data = PARTITION_SCHEMA(configured_partitions[part_num])
-        entity = EnvisalinkSensor(
-            hass,
-            entity_config_data[CONF_PARTITIONNAME],
-            part_num,
-            hass.data[DATA_EVL].alarm_state["partition"][part_num],
-            hass.data[DATA_EVL],
-        )
-
-        entities.append(entity)
-
     async_add_entities(entities)
 
 
@@ -73,17 +55,17 @@ class EnvisalinkSensor(EnvisalinkDevice, SensorEntity):
         )
 
     @property
-    def icon(self):
+    def icon(self) -> str | None:
         """Return the icon if any."""
         return self._icon
 
     @property
-    def native_value(self):
+    def native_value(self) -> str:
         """Return the overall state."""
         return self._info["status"]["alpha"]
 
     @property
-    def extra_state_attributes(self):
+    def extra_state_attributes(self) -> Mapping[str, Any]:
         """Return the state attributes."""
         return self._info["status"]
 
